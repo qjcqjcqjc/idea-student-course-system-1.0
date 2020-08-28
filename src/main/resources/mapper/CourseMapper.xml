@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.system.mapper.CourseMapper">
+    <resultMap id="courseMap" type="course">
+        <id column="courseid" property="courseId"/>
+        <result column="coursename" property="courseName"/>
+        <association property="teacher" column="teacherid" javaType="teacher">
+            <id column="teacherid" property="teacherId"/>
+            <result property="teacherName" column="teachername"/>
+        </association>
+        <association property="major" column="majorid" javaType="major">
+            <id column="majorid" property="majorId"/>
+            <association property="school" column="schoolid" javaType="school">
+                <id column="schoolid" property="schoolId"/>
+                <result column="schoolname" property="schoolName"/>
+            </association>
+        </association>
+    </resultMap>
+    <resultMap id="courseIdMap" type="course">
+        <id property="courseId" column="courseid"/>
+    </resultMap>
+
+
+     <select id="getAllCourseId" resultMap="courseIdMap">
+         SELECT courseid FROM courses
+     </select>
+    <select id="getAllCourses" resultMap="courseMap">
+        SELECT c.courseid,c.coursename,c.teacherid,t.teachername,m.majorid,s.schoolname FROM
+        courses c,teachers t,majors m, schools s WHERE
+        c.teacherid=t.teacherid AND c.majorid=m.majorid AND m.schoolid=s.schoolid
+    </select>
+    <select id="getCourseByCourseId" resultMap="courseMap">
+        SELECT c.courseid,c.coursename,t.teachername,m.majorid,s.schoolname FROM
+        courses c,teachers t,majors m, schools s WHERE
+        c.teacherid=t.teacherid AND c.majorid=m.majorid AND m.schoolid=s.schoolid AND courseid=#{courseId}
+    </select>
+    <select id="viewCourseByCourseName" resultMap="courseMap">
+        SELECT c.courseid,c.coursename,t.teachername,m.majorid,s.schoolname FROM
+        courses c,teachers t,majors m, schools s WHERE
+        c.teacherid=t.teacherid AND c.majorid=m.majorid AND m.schoolid=s.schoolid
+        And c.coursename LIKE '%'||#{value}||'%'
+    </select>
+    <select id="getSchoolBySchoolId" resultType="school">
+        SELECT s.schoolname FROM schools WHERE schoolid=#{value}
+    </select>
+    <select id="getMajorByMajorId" resultType="major">
+        SELECT * FROM majors WHERE majorid=#{value}
+    </select>
+    <select id="getTeacherById" resultType="teacher">
+        SELECT * FROM teachers WHERE teacherid=#{value}
+    </select>
+    <select id="viewCourseByTeacherName" resultMap="courseMap">
+        SELECT c.*,m.schoolid,s.schoolname FROM courses c,majors m, schools s WHERE c.majorid=m.majorid
+        AND m.schoolid=s.schoolid AND
+        teacherid=(SELECT teacherid FROM teachers WHERE teachername LIKE '%'||#{value}||'%')
+    </select>
+    <insert id="addCourse" parameterType="course">
+        INSERT INTO courses VALUES(#{courseId},#{courseName}，#{teacher.teacherId}，#{major.majorId})
+    </insert>
+    <delete id="deleteCourse" parameterType="course">
+        DELETE FROM courses WHERE courseid=#{value}
+    </delete>
+    <update id="updateCourse" parameterType="course">
+        UPDATE courses SET coursename=#{courseName},teacherid=#{teacherId},majorid=#{majorId} WHERE courseid=#{courseId}
+    </update>
+</mapper>

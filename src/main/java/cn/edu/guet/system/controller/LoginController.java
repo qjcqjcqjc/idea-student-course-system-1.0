@@ -9,7 +9,6 @@ import cn.edu.guet.system.util.UserDto;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,22 +26,21 @@ public class LoginController {
     @Autowired
     JwtUtils jwtUtils;
 
+    Result result=new Result();
     @RequestMapping(value = "login",method = RequestMethod.POST)
     public Object login(@RequestBody UserDto userDto, HttpSession httpSession, HttpServletResponse response){
         String username=userDto.getUsername();
         String password=userDto.getPassword();
-        System.out.println("ç™»é™†æ§åˆ¶å™¨"+username);
-        System.out.println("æ§åˆ¶å™¨"+password);
+        System.out.println("µÇÂ½¿ØÖÆÆ÷"+username);
+        System.out.println("¿ØÖÆÆ÷"+password);
 
         Object user=loginService.login(username,password);
-        Assert.notNull(user,"ç”¨æˆ·ä¸å­˜åœ¨");
+        Assert.notNull(user,"ÓÃ»§²»´æÔÚ");
         String jwt = jwtUtils.generateToken(username);
         response.setHeader("Authorization",jwt);
         response.setHeader("Access-control-Expose-Headers","Authorization");
         List<Menu> menuList=menuService.getMenuById(username);
-        return Result.succ(MapUtil.builder()
-                .put("menus",menuList)
-                .map()
-        );
+        return result.succ(200,"µÇÂ½³É¹¦",menuList);
     }
 }
+
