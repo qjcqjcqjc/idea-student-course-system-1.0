@@ -3,7 +3,6 @@ package cn.edu.guet.system.service.impl;
 import cn.edu.guet.system.mapper.MenuMapper;
 import cn.edu.guet.system.model.Menu;
 import cn.edu.guet.system.service.IMenuService;
-import cn.edu.guet.system.util.GetRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,17 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public List<Menu> getMenuById(String username) {
-        String roleid = GetRole.getRole(username);
+        String roleid=null;
+        if (username.length()==6){
+            roleid="R002";
+        }
+        else if (username.length()==10){
+            roleid="R001";
+        }
+        else if ("17007".equals(username)){
+            roleid="R003";
+        }
+
         List<Menu> menuList=menuMapper.getMenuById(roleid);
         return menuList;
     }

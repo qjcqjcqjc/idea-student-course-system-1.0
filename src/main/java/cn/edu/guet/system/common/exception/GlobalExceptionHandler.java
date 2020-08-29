@@ -1,7 +1,6 @@
 package cn.edu.guet.system.common.exception;
 
 import cn.edu.guet.system.exception.InsertException;
-import cn.edu.guet.system.exception.PermissionException;
 import cn.edu.guet.system.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
@@ -20,7 +19,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result handler(MethodArgumentNotValidException e) {
-        log.error("ÂÆû‰ΩìÊ†°È™åÂºÇÂ∏∏Ôºö----------------{}", e);
+        log.error(" µÃÂ–£—È“Ï≥££∫----------------{}", e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
 
@@ -36,28 +35,21 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value= InsertException.class)
     public Result handler(InsertException e){
-        log.error("ÊèíÂÖ•ÂºÇÂ∏∏..........{}",e);
-        return Result.fail(e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value= PermissionException.class)
-    public Result handler(PermissionException e){
-        log.error("ÊùÉÈôêÂºÇÂ∏∏..........{}",e);
+        log.error("≤Â»Î“Ï≥£..........{}",e);
         return Result.fail(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value=RuntimeException.class)
     public Result handler(RuntimeException e){
-        log.error("ËøêË°åÊó∂ÂºÇÂ∏∏..........{}",e);
+        log.error("‘À–– ±“Ï≥£..........{}",e);
         return Result.fail(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value=IllegalArgumentException.class)
     public Result handler(IllegalArgumentException e){
-        log.error("AssertÂºÇÂ∏∏..........{}",e);
+        log.error("Assert“Ï≥£..........{}",e);
         return Result.fail(e.getMessage());
     }
 }

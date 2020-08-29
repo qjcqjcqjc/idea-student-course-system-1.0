@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.system.mapper.UserMapper">
+
+
+    <resultMap id="classStudentMap" type="clazz">
+        <id column="classid" property="classId"/>
+        <result column="grade" property="grade"/>
+        <collection property="studentList" column="classid" select="getStudentById">
+        </collection>
+    </resultMap>
+
+    <resultMap id="stuClazzMap" type="student">
+        <id column="studentid" property="studentId"/>
+        <result column="studentname" property="studentName"/>
+        <association property="clazz" column="classid" javaType="clazz">
+            <id column="classid" property="classId"/>
+            <result column="grade" property="grade"/>
+            <association column="major" property="major" javaType="major">
+                <id column="majorid" property="majorId"/>
+                <association property="school" column="school">
+                    <id column="schoolid" property="schoolId"/>
+                    <result column="schoolname" property="schoolName"/>
+                </association>
+            </association>
+        </association>
+    </resultMap>
+
+    <resultMap id="schoolTeacherMap" type="school">
+        <id column="schoolid" property="schoolId"/>
+        <result column="schoolname" property="schoolName"/>
+        <collection property="teacherList" column="schoolid" select="getTeacherById">
+        </collection>
+    </resultMap>
+
+    <resultMap id="teaSchoolMap" type="teacher">
+        <id column="teacherid" property="teacherId"/>
+        <result column="teachername" property="teacherName"/>
+        <association property="school" column="schoolid" javaType="school">
+            <id column="schoolid" property="schoolId"></id>
+            <result column="schoolname" property="schoolName"/>
+        </association>
+    </resultMap>
+    <resultMap id="AllStudentIdMap" type="student">
+        <id column="studentid" property="studentId"/>
+    </resultMap>
+    <resultMap id="majorMap" type="major">
+        <id column="majorid" property="majorId"/>
+    </resultMap>
+    <resultMap id="teacherMap" type="teacher">
+        <id column="teacherid" property="teacherId"/>
+    </resultMap>
+    <resultMap id="clazzMap" type="clazz">
+        <id column="classid" property="classId"/>
+    </resultMap>
+    <resultMap id="schoolMap" type="school">
+        <id column="schoolid" property="schoolId"/>
+    </resultMap>
+
+    <!--    公共条件-->
+    <select id="getClazzById" resultType="clazz">
+        SELECT * FROM classes WHERE classid=#{classId}
+    </select>
+    <select id="getMajorByMajorId" resultType="major">
+        SELECT * FROM majors WHERE majorid=#{value}
+    </select>
+    <select id="getSchoolById" resultType="school">
+        SELECT * FROM schools WHERE schoolid=#{schoolId}
+    </select>
+    <select id="getAllStudentId" resultMap="AllStudentIdMap">
+        SELECT studentid FROM students
+    </select>
+    <select id="getAllTeacherId" resultMap="teaSchoolMap">
+        SELECT teacherid FROM teachers
+    </select>
+    <select id="getAllClazzId" resultMap="clazzMap">
+        SELECT classid FROM classes
+    </select>
+    <select id="getAllMajorId" resultMap="majorMap">
+        SELECT majorid FROM majors
+    </select>
+    <select id="getAllSchoolId" resultMap="schoolMap">
+        SELECT schoolid FROM schools
+    </select>
+
+    <!--    老师模块-->
+    <select id="getTeacherById" resultMap="teaSchoolMap">
+        SELECT * FROM teachers t,schools s WHERE t.schoolid=s.schoolid
+         AND teacherid=#{value}
+    </select>
+    <select id="getAllTeacher" resultMap="teaSchoolMap">
+        SELECT * FROM teachers t,schools s WHERE t.schoolid=s.schoolid
+    </select>
+    <insert id="addTeacher" parameterType="teacher">
+        INSERT INTO teachers VALUES(#{teacherId},123456,#{teacherName},#{school.schoolId})
+    </insert>
+    <delete id="deleteTeacher" parameterType="teacher">
+        DELETE FROM teachers WHERE teacherid=#{teacherId}
+    </delete>
+
+    <!--    学生模块-->
+    <select id="getAllStudent" resultMap="stuClazzMap">
+        SELECT st.*,c.grade,m.*,sc.schoolname FROM students st,classes c,majors m,schools sc
+        WHERE st.classid=c.classid And c.majorid=m.majorid And m.schoolid=sc.schoolid
+    </select>
+    <select id="getStudentById" resultMap="stuClazzMap">
+        SELECT st.*,c.grade,m.*,sc.schoolname FROM students st,classes c,majors m,schools sc
+        WHERE st.classid=c.classid And c.majorid=m.majorid And m.schoolid=sc.schoolid
+        AND studentId=#{studentId}
+    </select>
+    <select id="viewStudentBySchoolName" resultMap="stuClazzMap">
+        SELECT st.*,c.grade,m.*,sc.schoolname FROM students st,classes c,majors m,schools sc
+        WHERE st.classid=c.classid And c.majorid=m.majorid And m.schoolid=sc.schoolid
+        AND sc.schoolname LIKE '%'||#{value}||'%'
+    </select>
+    <insert id="addStudent" parameterType="student">
+        INSERT INTO students VALUES(#{studentId},123456,#{studentName},#{clazz.classId})
+    </insert>
+    <delete id="deleteStudent" parameterType="student">
+        DELETE FROM students WHERE studentid=#{studentId}
+    </delete>
+
+</mapper>
