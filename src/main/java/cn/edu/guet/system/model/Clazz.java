@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Clazz {
-    private String clazzId;
+    private String classId;
     private String grade;
     private Major major;
 }
