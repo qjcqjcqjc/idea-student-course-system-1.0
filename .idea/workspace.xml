@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4eb8b9bf-2c35-44c5-a22e-70ebde737399" name="Default Changelist" comment="" />
+    <list default="true" id="4eb8b9bf-2c35-44c5-a22e-70ebde737399" name="Default Changelist" comment="解决登录冲突问题3">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +56,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -105,7 +108,8 @@
       <workItem from="1598518747113" duration="3956000" />
       <workItem from="1598609598614" duration="247000" />
       <workItem from="1598616205815" duration="4072000" />
-      <workItem from="1598661502382" duration="1879000" />
+      <workItem from="1598661502382" duration="3345000" />
+      <workItem from="1598665350826" duration="694000" />
     </task>
     <task id="LOCAL-00001" summary="整合用户管理和课程管理">
       <created>1598609732485</created>
@@ -121,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1598663299138</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="解决登录冲突问题2">
+      <created>1598663581727</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1598663581727</updated>
+    </task>
+    <task id="LOCAL-00004" summary="解决登录冲突问题3">
+      <created>1598663623218</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1598663623218</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -151,8 +169,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/idea-student-course-system-1.0" />
+    </ignored-roots>
     <MESSAGE value="整合用户管理和课程管理" />
     <MESSAGE value="解决登录冲突问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="解决登录冲突问题" />
+    <MESSAGE value="解决登录冲突问题2" />
+    <MESSAGE value="解决登录冲突问题3" />
+    <option name="LAST_COMMIT_MESSAGE" value="解决登录冲突问题3" />
   </component>
 </project>
