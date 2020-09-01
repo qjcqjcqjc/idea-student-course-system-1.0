@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -65,8 +64,8 @@ public class ACourseController {
 
     //添加课程
     @RequestMapping(value = "/addCourse",method = RequestMethod.POST)
-    public Result addCourse(String courseId, String courseName, String teacherId, String majorId, HttpServletRequest request) {
-        authentication.getUsername(request,"AddCourse");
+    public Result addCourse(String courseId, String courseName, String teacherId, String majorId) {
+        System.out.println("1111111" + courseId);
         Course addCourse = new Course();
         List allCourseId=courseService.getAllCourseId();
         List allTeacherId=userService.getAllTeacherId();
@@ -95,8 +94,7 @@ public class ACourseController {
 
     //删除课程
     @RequestMapping(value = "/aDeleteCourse",method = RequestMethod.GET)
-    public Result deleteCourse(String courseId,HttpServletRequest request){
-        authentication.getUsername(request,"FindCourse");
+    public Result deleteCourse(String courseId){
         System.out.println(courseId);
         try {
             courseService.deleteCourse(courseId);
@@ -110,17 +108,26 @@ public class ACourseController {
     //更新课程
     @RequestMapping(value = "/updateCourse",method = RequestMethod.POST)
     public Result updateCourse(String courseId,String courseName,String teacherId,String majorId){
-        Course updateCourse=courseService.getCourseByCourseId(courseId);
+        System.out.println("1111111" + majorId);
+        Course updateCourse=new Course();
         Teacher teacher=courseService.getTeacherById(teacherId);
         Major major=courseService.getMajorByMajorId(majorId);
-        updateCourse.setCourseName(courseName);
-        updateCourse.setTeacher(teacher);
-        updateCourse.setMajor(major);
-        courseService.updateCourse(updateCourse);
-        if(updateCourse==null){
-            return result.fail("更新课程失败");
-        }else{
-            return result.succ(200,"更新课程成功",null);
+        List allTeacherId=userService.getAllTeacherId();
+        List allMajorId=userService.getAllMajorId();
+        try {
+            updateCourse.setCourseId(courseId);
+            updateCourse.setCourseName(courseName);
+            updateCourse.setTeacher(teacher);
+            updateCourse.setMajor(major);
+            courseService.updateCourse(updateCourse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (!allTeacherId.contains(teacherId)){
+                return result.fail("该老师不存在");
+            }else if (!allMajorId.contains(majorId)){
+                return result.fail("该专业不存在");
+            }
         }
+       return null;
     }
 }

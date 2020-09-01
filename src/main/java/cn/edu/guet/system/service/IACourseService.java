@@ -15,6 +15,6 @@ public interface IACourseService {
     List<Course> viewCourseByTeacherName(String teacherName);
     void addCourse(Course course) throws Exception;
     void deleteCourse(String courseId) throws Exception;
-    void updateCourse(Course course);
+    void updateCourse(Course course) throws Exception;
     Major getMajorByMajorId(String majorId);
 }
