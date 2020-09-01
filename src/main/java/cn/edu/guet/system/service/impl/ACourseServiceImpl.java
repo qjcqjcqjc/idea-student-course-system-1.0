@@ -67,7 +67,7 @@ public class ACourseServiceImpl implements IACourseService {
     }
 
     @Override
-    public void updateCourse(Course course) {
+    public void updateCourse(Course course) throws Exception {
         ACourseMapper.updateCourse(course);
     }
 

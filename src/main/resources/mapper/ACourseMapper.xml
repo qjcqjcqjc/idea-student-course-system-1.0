@@ -61,6 +61,6 @@
         DELETE FROM courses WHERE courseid=#{value}
     </delete>
     <update id="updateCourse" parameterType="course">
-        UPDATE courses SET coursename=#{courseName},teacherid=#{teacherId},majorid=#{majorId} WHERE courseid=#{courseId}
+        UPDATE courses SET coursename=#{courseName},teacherid=#{teacher.teacherId},majorid=#{major.majorId} WHERE courseid=#{courseId}
     </update>
 </mapper>
